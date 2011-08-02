@@ -157,7 +157,7 @@
 							'left':		(area_coord[0]*percent)+"px",
 							'top':		(area_coord[1]*percent)+"px",
 							'width':	((area_coord[2]-area_coord[0])*percent)+"px",
-							'height':	((area_coord[3]-area_coord[1])*percent)+"px"
+							'height':	((area_coord[3]-area_coord[1])*percent)+"px",
 						});
 						break;
 					case 2:
