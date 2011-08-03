@@ -13,34 +13,34 @@
 				image_height: 0,
 				mouse_wheel_multiplier: 20,
 				bind_resize: true, // determine if window resize affects panorama viewport
-				is360: true // glue left and right and make it scrollable
+				is360: true, // glue left and right and make it scrollable
+				debug: false
 			};
 			if(options) $.extend(settings, options);
 			var viewport = $(this);
 			var panoramaContainer = viewport.children('.panorama-container');
 			var viewportImage = panoramaContainer.children('img:first');
-			if(settings.image_width<=0 && settings.image_height<=0){
-				settings.image_width = parseInt(viewportImage.data("width"));
-				settings.image_height = parseInt(viewportImage.data("height"));
-				if (!(settings.image_width) || !(settings.image_height)) return;
-			}
-			var image_ratio = settings.image_height/settings.image_width;
-			var elem_height = parseInt(viewport.height());
-			var elem_width = parseInt(elem_height/image_ratio);
-			var image_map = viewportImage.attr('usemap');
-			var image_areas;
-			var isDragged = false;
-			var mouseXprev = 0;
-			var scrollDelta = 0;
+				if(settings.image_width<=0 && settings.image_height<=0){
+					settings.image_width = parseInt(viewportImage.data("width"));
+					settings.image_height = parseInt(viewportImage.data("height"));
+					if (!(settings.image_width) || !(settings.image_height)) return;
+				}
+				var image_ratio = settings.image_height/settings.image_width;
+				var elem_height = parseInt(viewport.height());
+				var elem_width = parseInt(elem_height/image_ratio);
+				var image_map = viewportImage.attr('usemap');
+				var image_areas;
+				var isDragged = false;
+				var mouseXprev = 0;
+				var scrollDelta = 0;
 
-			if (settings.is360) viewportImage.height(elem_height).removeAttr("usemap").css("left",0).clone().css("left",elem_width+"px").insertAfter(viewportImage);
+				if (settings.is360) viewportImage.height(elem_height).removeAttr("usemap").css("left",0).clone().css("left",elem_width+"px").insertAfter(viewportImage);
 
-			panoramaContainer.css({
-				'margin-left': '-'+settings.start_position+'px',
-				'width': (elem_width*2)+'px',
-				'height': (elem_height)+'px'
-			});
-
+				panoramaContainer.css({
+					'margin-left': '-'+settings.start_position+'px',
+					'width': (elem_width*2)+'px',
+					'height': (elem_height)+'px'
+				});
 			setInterval( function() {
 				if (isDragged) return false;
 				scrollDelta = scrollDelta * 0.98;
@@ -93,7 +93,12 @@
 					switch ($(this).attr("shape").toLowerCase()){
 						case 'rect':
 							var area_coord = $(this).attr("coords").split(",");
-							$area1 = $("<a class='area' href='"+$(this).attr("href")+"' title='"+$(this).attr("alt")+"'</a>");
+							if ($(this).attr("image")) {
+								$area1 = $("<img src='" + $(this).attr("image") + "' class='area " + $(this).attr("class") + "' href='"+$(this).attr("href")+"' title='"+$(this).attr("alt")+"'\/>");
+							}
+							else {
+								$area1 = $("<a class='area " + $(this).attr("class") + "' href='"+$(this).attr("href")+"' title='"+$(this).attr("alt")+"'</a>");
+							}
 							panoramaContainer.append($area1.data("stitch",1).data("coords",area_coord));
 							panoramaContainer.append($area1.clone().data("stitch",2).data("coords",area_coord));
 							break;
@@ -145,7 +150,17 @@
 			}
 			panoramaContainer.css('marginLeft', newMarginLeft+'px');
 		}
-
+		
+		$(".panorama-view:first").show();
+		$(".area").click(function(e) {
+			e.preventDefault();
+			var thisRoom = $(this).attr("class").replace(/\area\s+/,"").replace(/\s+$/,"");
+			var nextRoom = $(this).attr("href");
+			$("." + nextRoom).fadeIn("slow");
+			$("." + thisRoom).hide();
+		});
+			
+			
 		function repositionHotspots(areas,image_height,elem_height,elem_width){
 			var percent = elem_height/image_height;
 			areas.each(function(){

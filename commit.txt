@@ -1,0 +1,6 @@
+Added support for multiple images natively
+	Changed css to hide all elements
+	Changed js to show the first image
+	Changed js to support links between panoramas
+	Changed js to keep area element classes defined by class attribute
+	Added support for images in the links

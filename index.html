@@ -19,11 +19,30 @@
 </head>
 <body>
 	<div class="panorama">
-		<div class="panorama-view">
+		<div class="panorama-view foyer">
 			<div class="panorama-container">
 				<img src="images/image.jpg" data-width="4496" data-height="799" usemap="hotspots"  alt="Panorama" />
 				<map id="hotspots" name="hotspots"> 
-					<area shape="rect" coords="240,530,520,580" href="#" alt="Dining Room" />
+					<area image="images/calendar.png" class="foyer" shape="rect" coords="240,530,520,580" href="diningRoom" alt="Dining Room" />
+					<area image="images/calendar.png" class="foyer" shape="rect" coords="0,0,50,50" href="smallKitchen" alt="Dining Room" />
+				</map>
+			</div>
+		</div>
+		<div class="panorama-view diningRoom">
+			<div class="panorama-container">
+				<img src="images/image1.jpg" data-width="4480" data-height="799" usemap="links"  alt="Panorama" />
+				<map id="links" name="links"> 
+					<area image="images/calendar.png" class="diningRoom" shape="rect" coords="240,530,520,580" href="foyer" alt="Dining Room" />
+					<area image="images/calendar.png" class="diningRoom" shape="rect" coords="0,0,50,50" href="smallKitchen" alt="Dining Room" />
+				</map>
+			</div>
+		</div>
+		<div class="panorama-view smallKitchen">
+			<div class="panorama-container">
+				<img src="images/image3.jpg" data-width="4560" data-height="799" usemap="links1"  alt="Panorama" />
+				<map id="links1" name="links1"> 
+					<area image="images/calendar.png" class="smallKitchen" shape="rect" coords="240,530,520,580" href="foyer" alt="Foyer" />
+					<area image="images/calendar.png" class="smallKitchen" shape="rect" coords="0,0,50,50" href="diningRoom" alt="Dining Room" />
 				</map>
 			</div>
 		</div>
